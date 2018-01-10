@@ -1,0 +1,11 @@
+[Unit]
+Description=Await variable %i
+
+[Service]
+ExecStart=/usr/bin/env await-env %i
+SyslogIdentifier=await-env-%i
+Type=oneshot
+#RemainAfterExit=true
+
+[Install]
+WantedBy=default.target
