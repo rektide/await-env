@@ -4,7 +4,6 @@
 var="$1"
 testVar(){
 	systemctl --user show-environment | grep -e "$var=." || return 1
-	#return 0
 }
 while ! testVar
 do
@@ -14,7 +13,7 @@ done
 # load the environment now that it for sure has the variable
 systemctl --user show-environment | while read -r line
 do
-	eval "$line"
+	eval "export $line"
 done
 
 # remove the "var" we just looked for
@@ -32,6 +31,7 @@ shift
 # ideally something like exec $* would be workable,
 # but that specific command means `await-env MY_VAR sh -c "echo done"` would not work
 
+n="$#"
 if [ "$#" -gt 9 ]
 then
 	arg1="$1"
@@ -51,7 +51,26 @@ then
 	arg8="$1"
 	[ -n "$1" ] && shift
 	arg9="$1"
-	exec "$arg1" "$arg2" "$arg3" "$arg4" "$arg5" "$arg6" $arg7" $arg8" "$arg9" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
-	# exec doesn't return! the shell terminates when it runs! this branch is done!
 fi
-exec "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+
+env
+
+[ "$n" -eq 18 ] && exec "$arg1" "$arg2" "$arg3" "$arg4" "$arg5" "$arg6" "$arg7" "$arg8" "$arg9" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+[ "$n" -eq 17 ] && exec "$arg1" "$arg2" "$arg3" "$arg4" "$arg5" "$arg6" "$arg7" "$arg8" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+[ "$n" -eq 16 ] && exec "$arg1" "$arg2" "$arg3" "$arg4" "$arg5" "$arg6" "$arg7" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+[ "$n" -eq 15 ] && exec "$arg1" "$arg2" "$arg3" "$arg4" "$arg5" "$arg6" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+[ "$n" -eq 14 ] && exec "$arg1" "$arg2" "$arg3" "$arg4" "$arg5" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+[ "$n" -eq 13 ] && exec "$arg1" "$arg2" "$arg3" "$arg4" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+[ "$n" -eq 12 ] && exec "$arg1" "$arg2" "$arg3" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+[ "$n" -eq 11 ] && exec "$arg1" "$arg2" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+[ "$n" -eq 10 ] && exec "$arg1" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+
+[ "$n" -eq 9 ] && exec "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+[ "$n" -eq 8 ] && exec "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8"
+[ "$n" -eq 7 ] && exec "$1" "$2" "$3" "$4" "$5" "$6" "$7"
+[ "$n" -eq 6 ] && exec "$1" "$2" "$3" "$4" "$5" "$6"
+[ "$n" -eq 5 ] && exec "$1" "$2" "$3" "$4" "$5"
+[ "$n" -eq 4 ] && exec "$1" "$2" "$3" "$4"
+[ "$n" -eq 3 ] && exec "$1" "$2" "$3"
+[ "$n" -eq 2 ] && exec "$1" "$2"
+[ "$n" -eq 1 ] && exec "$1"
