@@ -12,7 +12,10 @@ do
 done
 
 # load the environment now that it for sure has the variable
-eval $(systemctl --user show-environment)
+systemctl --user show-environment | while read -r line
+do
+	eval "$line"
+done
 
 # remove the "var" we just looked for
 shift

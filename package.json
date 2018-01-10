@@ -1,6 +1,6 @@
 {
 	"name": "await-env",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Wait for an environment variable to be present in the systemd environment, then execute a command",
 	"main": "await-env.js",
 	"bin": {
