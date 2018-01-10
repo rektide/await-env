@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# filter a env format stdin, picking a variable
+
+# var ot pick
+var="$1"
+
+# read env from stdin
+cat - | while read -r line 
+do
+	matched="$(echo $line | grep -e "^$var=."|| true)"
+	[ -z "$matched" ] && continue
+
+	cutlen=$(( ${#var} + 2 ))
+	echo $line | cut -c $cutlen-
+done
