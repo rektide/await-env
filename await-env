@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -x
-
 # we're going to loop until we see this var
 var="$1"
 testVar(){
@@ -12,6 +10,9 @@ while ! testVar
 do
 	sleep 1
 done
+
+# load the environment now that it for sure has the variable
+eval $(systemctl --user show-environment)
 
 # remove the "var" we just looked for
 shift
