@@ -8,9 +8,11 @@ var="$1"
 # read env from stdin
 cat - | while read -r line 
 do
-	matched="$(echo $line | grep -e "^$var=."|| true)"
-	[ -z "$matched" ] && continue
+	match1="$(echo $line | grep -e "^$var=."|| true)"
+	match2="$(echo $line | grep -e "^export $var=."|| true)"
+	[ -z "$match1" ] && [ -z "$match2" ] && continue
 
 	cutlen=$(( ${#var} + 2 ))
+	[ -n "$match2" ] && cutlen=$(( ${#var} + 9 ))
 	echo $line | cut -c $cutlen-
 done
