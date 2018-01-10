@@ -17,6 +17,9 @@ do
 	eval "$line"
 done
 
+# WHAT IS GOING ON debug statement
+sleep 20
+
 # remove the "var" we just looked for
 shift
 
