@@ -1,0 +1,16 @@
+{
+	"name": "await-env",
+	"version": "1.0.0",
+	"description": "Wait for an environment variable to be present in the systemd environment, then execute a command",
+	"main": "await-env.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://archive.voodoowarez.com/await-env"
+	},
+	"keywords": [],
+	"author": "rektide de la faye",
+	"license": "X11"
+}
