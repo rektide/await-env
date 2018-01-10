@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 # we're going to loop until we see this var
 var="$1"
 testVar(){
@@ -11,10 +13,8 @@ do
 done
 
 # load the environment now that it for sure has the variable
-systemctl --user show-environment | while read -r line
-do
-	eval "export $line"
-done
+freshenv="$(systemctl --user show-environment)"
+eval export $freshenv
 
 # remove the "var" we just looked for
 shift
@@ -53,8 +53,8 @@ then
 	arg9="$1"
 fi
 
-#run=exec
-run="systemd-run --user"
+run=exec
+#run="systemd-run --user"
 
 [ "$n" -eq 18 ] && $run "$arg1" "$arg2" "$arg3" "$arg4" "$arg5" "$arg6" "$arg7" "$arg8" "$arg9" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
 [ "$n" -eq 17 ] && $run "$arg1" "$arg2" "$arg3" "$arg4" "$arg5" "$arg6" "$arg7" "$arg8" "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
